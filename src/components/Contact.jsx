@@ -41,11 +41,11 @@ const Contact = () => {
 
     if (Object.keys(newErrors).length === 0) {
       try {
-        const response = await fetch('https://samseetech-backend.onrender.com', {
-          method: 'POST',
-          headers: { 'Content-Type': 'application/json' },
-          body: JSON.stringify(formData),
-        })
+        const response = await fetch('https://samseetech-backend.onrender.com/api/contact', {
+  method: 'POST',
+  headers: { 'Content-Type': 'application/json' },
+  body: JSON.stringify(formData),
+})
 
         if (response.ok) {
           toast.success("Message sent successfully 🚀")
