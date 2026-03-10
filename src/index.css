@@ -1,0 +1,25 @@
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap');
+
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+body {
+  font-family: 'Inter', sans-serif;
+}
+
+body {
+  font-family: 'Inter', sans-serif;
+  background-color: #0F172A;
+  color: #FFFFFF;
+}
+
+html {
+  scroll-behavior: smooth;
+}
+
+/* Parallax classes for advanced effects */
+.parallax-bg {
+  background-attachment: fixed;
+  background-size: cover;
+}
