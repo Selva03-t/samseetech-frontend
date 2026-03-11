@@ -4,10 +4,10 @@ import Card from './ui/Card'
 
 const projects = [
   { 
-    title: 'Bakery Website', 
+    title: 'IoT Devices Ordering Website', 
     desc: 'Delicious digital presence for local bakery.', 
     image: 'https://www.zarla.com/images/zarla-websiteexamples-self-raised-2112x1280-20250310.webp?width=1056&dpr=2&crop=400:248%2Coffset-x0%2Coffset-y0&format=jpg',
-    demoUrl: ''  // Update with real demo
+    demoUrl: 'https://aruniotdevices.netlify.app/'  // Update with real demo
   },
   { 
     title: 'Timesheet Application & Ac Ordering App Design', 
