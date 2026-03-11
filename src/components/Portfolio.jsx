@@ -1,12 +1,13 @@
 import { motion, useInView } from 'framer-motion'
 import { useRef } from 'react'
 import Card from './ui/Card'
+import iot from '../assets/Iot.png'
 
 const projects = [
   { 
     title: 'IoT Devices Ordering Website', 
     desc: 'Delicious digital presence for local bakery.', 
-    image: 'https://www.zarla.com/images/zarla-websiteexamples-self-raised-2112x1280-20250310.webp?width=1056&dpr=2&crop=400:248%2Coffset-x0%2Coffset-y0&format=jpg',
+    image: iot,
     demoUrl: 'https://aruniotdevices.netlify.app/'  // Update with real demo
   },
   { 
