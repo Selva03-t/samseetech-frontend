@@ -27,38 +27,59 @@ const Contact = () => {
     }
   }, [])
 
-  const handleSubmit = async (e) => {
-    e.preventDefault()
+ const handleSubmit = async (e) => {
+  e.preventDefault();
 
-    const newErrors = {}
+  const newErrors = {};
 
-    if (!formData.name) newErrors.name = "Name required"
-    if (!formData.email) newErrors.email = "Email required"
-    if (!formData.phone) newErrors.phone = "Phone required"
-    if (!formData.message) newErrors.message = "Message required"
+  if (!formData.name) newErrors.name = "Name required";
+  if (!formData.email) newErrors.email = "Email required";
+  if (!formData.phone) newErrors.phone = "Phone required";
+  if (!formData.message) newErrors.message = "Message required";
 
-    setErrors(newErrors)
+  setErrors(newErrors);
 
-    if (Object.keys(newErrors).length === 0) {
-      try {
-        const response = await fetch('https://samseetech-backend.onrender.com/api/contact', {
-  method: 'POST',
-  headers: { 'Content-Type': 'application/json' },
-  body: JSON.stringify(formData),
-})
+  if (Object.keys(newErrors).length === 0) {
 
-        if (response.ok) {
-          toast.success("Message sent successfully 🚀")
-          setFormData({ name: '', email: '', phone: '', message: '' })
-        } else {
-          toast.error("Failed to send message")
-        }
-      } catch (error) {
-        console.error('Error:', error)
-        toast.error("Network error. Try again.")
+    try {
+
+      const response = await fetch("https://samseetech-backend.onrender.com/api/contact", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json"
+        },
+        body: JSON.stringify(formData)
+      });
+
+      const data = await response.json();
+
+      console.log("Server Response:", data);
+
+      if (response.ok) {
+
+        toast.success("Message sent successfully 🚀");
+
+        setFormData({
+          name: "",
+          email: "",
+          phone: "",
+          message: ""
+        });
+
+      } else {
+
+        toast.error(data.message || "Failed to send message");
+
       }
+
+    } catch (error) {
+
+      console.error("Error:", error);
+      toast.error("Network error. Try again.");
+
     }
   }
+};
 
   const inputVariants = {
     focus: { scale: 1.02, borderColor: '#1F6FEB' },

@@ -121,9 +121,33 @@ const Footer = () => {
             {/* SOCIAL */}
             <div className="flex gap-4">
 
-              <Facebook className="w-5 h-5 cursor-pointer hover:text-white" />
-              <Instagram className="w-5 h-5 cursor-pointer hover:text-white" />
-              <Linkedin className="w-5 h-5 cursor-pointer hover:text-white" />
+              <div className="flex gap-4">
+
+  <a
+    href="https://facebook.com/yourpage"
+    target="_blank"
+    rel="noopener noreferrer"
+  >
+    <Facebook className="w-5 h-5 hover:scale-110 hover:text-primary-blue transition" />
+  </a>
+
+  <a
+    href="https://www.instagram.com/samsee.tech?igsh=MW9oODF1Znhhanc4Ng=="
+    target="_blank"
+    rel="noopener noreferrer"
+  >
+    <Instagram className="w-5 h-5 hover:scale-110 hover:text-primary-blue transition" />
+  </a>
+
+  <a
+    href="https://linkedin.com/company/yourpage"
+    target="_blank"
+    rel="noopener noreferrer"
+  >
+    <Linkedin className="w-5 h-5 hover:scale-110 hover:text-primary-blue transition" />
+  </a>
+
+</div>
 
             </div>
 
