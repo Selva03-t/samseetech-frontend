@@ -4,13 +4,12 @@ import Card from './ui/Card'
 import { User, Code, Layout, Server, Search, FileText } from 'lucide-react'
 
 const team = [
- 
   { name: 'Selva, Arun', role: 'UI/UX Designer', icon: Layout },
-   { name: 'Selva', role: 'Full Stack Developer & Tester', icon: Code },
+  { name: 'Selva', role: 'Full Stack Developer & Tester', icon: Code },
   { name: 'Padmanapan, Prem', role: 'Frontend Developer', icon: Code },
   { name: 'Padmanapan, Arun', role: 'Backend Developer', icon: Server },
   { name: 'Arif, Prem', role: 'SEO Analyst', icon: Search },
-  { name: 'Arun, Arif', role: 'Content Writer & Video Vditing', icon: FileText },
+  { name: 'Arun, Arif', role: 'Content Writer & Video Editing', icon: FileText },
 ]
 
 const Team = () => {
@@ -25,6 +24,15 @@ const Team = () => {
     },
   }
 
+  const cardVariants = {
+    hidden: { opacity: 0, y: 30 },
+    visible: {
+      opacity: 1,
+      y: 0,
+      transition: { duration: 0.5 },
+    },
+  }
+
   return (
     <section ref={ref} className="relative py-20">
       <div className="container mx-auto px-4">
@@ -35,49 +43,44 @@ const Team = () => {
         >
           Our Team
         </motion.h2>
+
         <motion.div
           variants={containerVariants}
           initial="hidden"
           animate={isInView ? "visible" : "hidden"}
           className="grid md:grid-cols-3 gap-8"
         >
-          {team.map((member, i) => {
+          {team.map((member) => {
             const Icon = member.icon
+
             return (
               <motion.div
                 key={member.name}
-                whileHover={{ rotateY: 10 }}
-                whileTap={{ scale: 0.95 }}
-                drag
-                dragConstraints={{ top: -10, left: -10, right: 10, bottom: 10 }}
-                dragElastic={0.2}
+                variants={cardVariants}
+                whileHover={{ y: -10 }}
+                transition={{ type: "spring", stiffness: 200 }}
               >
-                <Card className="h-full flex flex-col justify-between p-6 cursor-grab active:cursor-grabbing">
+                <Card className="h-full p-6 text-center backdrop-blur-sm bg-deep-tech/40 border border-primary-blue/20 hover:border-teal-accent/60 transition-all duration-300 shadow-lg hover:shadow-primary-blue/40">
 
-  <motion.div
-    initial={{ rotateX: -90 }}
-    animate={{ rotateX: 0 }}
-    transition={{ delay: i * 0.1, duration: 0.5 }}
-    className="flex items-center space-x-4 mb-4 flex-grow"
-  >
-    <div className="w-12 h-12 bg-primary-blue rounded-full flex items-center justify-center">
-      <User size={20} className="text-white" />
-    </div>
+                  <div className="flex flex-col items-center">
 
-    <div>
-      <h3 className="font-semibold">{member.name}</h3>
-      <p className="text-gray-text text-sm">{member.role}</p>
-    </div>
-  </motion.div>
+                    <div className="w-14 h-14 bg-primary-blue rounded-full flex items-center justify-center mb-4">
+                      <User size={22} className="text-white" />
+                    </div>
 
-  <motion.div
-    whileHover={{ scale: 1.3, rotate: 180 }}
-    className="text-center mt-4"
-  >
-    <Icon className="w-8 h-8 text-teal-accent mx-auto" />
-  </motion.div>
+                    <h3 className="font-semibold text-lg">{member.name}</h3>
+                    <p className="text-gray-text text-sm mb-4">{member.role}</p>
 
-</Card>
+                    <motion.div
+                      whileHover={{ scale: 1.2, rotate: 15 }}
+                      transition={{ type: "spring", stiffness: 300 }}
+                    >
+                      <Icon className="w-8 h-8 text-teal-accent" />
+                    </motion.div>
+
+                  </div>
+
+                </Card>
               </motion.div>
             )
           })}
