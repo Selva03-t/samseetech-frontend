@@ -1,6 +1,6 @@
 import { motion, useInView } from 'framer-motion'
 import { useRef } from 'react'
-import { ArrowRight, Rocket } from 'lucide-react'
+import { ArrowRight, Rocket, MessageCircle } from 'lucide-react'
 import Button from './ui/Button'
 
 const CTA = () => {
@@ -10,6 +10,11 @@ const CTA = () => {
   const scrollToContact = () => {
     const el = document.getElementById('contact')
     if (el) el.scrollIntoView({ behavior: 'smooth', block: 'start' })
+  }
+
+  const openSAM = () => {
+    // Trigger SAM chatbot by dispatching a custom event
+    window.dispatchEvent(new CustomEvent('openSAM'))
   }
 
   return (
@@ -61,12 +66,12 @@ const CTA = () => {
           </motion.div>
 
           <h2 className="font-display text-4xl sm:text-5xl lg:text-6xl font-black text-white mb-6 leading-tight">
-            Ready to Grow Your{' '}
-            <span className="gradient-text">Business Digitally?</span>
+            Let&apos;s Build Your Project{' '}
+            <span className="gradient-text">Together 🚀</span>
           </h2>
 
           <p className="text-gray-400 text-lg sm:text-xl mb-10 max-w-2xl mx-auto leading-relaxed">
-            Let&apos;s build something amazing together. From websites to digital marketing — we help you stand out and grow online.
+            Ready to transform your business online? Let&apos;s start with a free consultation and build something amazing.
           </p>
 
           <div className="flex flex-col sm:flex-row gap-4 justify-center">
@@ -74,15 +79,16 @@ const CTA = () => {
               onClick={scrollToContact}
               className="!text-base !px-8 !py-4 !rounded-xl shadow-2xl shadow-primary-blue/30"
             >
-              Get Started Today
+              Start Your Project
               <ArrowRight size={18} />
             </Button>
             <Button
               variant="outline"
-              onClick={() => window.open('tel:+919025370797')}
+              onClick={openSAM}
               className="!text-base !px-8 !py-4 !rounded-xl"
             >
-              Call Us Now
+              <MessageCircle size={18} />
+              Talk to SAM
             </Button>
           </div>
         </motion.div>

@@ -128,4 +128,24 @@
   .stat-glow {
     text-shadow: 0 0 30px rgba(31, 111, 235, 0.6);
   }
+
+  /* WhatsApp button glow */
+  .whatsapp-float {
+    box-shadow: 0 8px 32px rgba(37, 211, 102, 0.45);
+  }
+
+  /* Stat counter text */
+  .stat-number {
+    font-variant-numeric: tabular-nums;
+    font-feature-settings: "tnum";
+  }
+
+  /* Hide scrollbar utility */
+  .scrollbar-hide {
+    scrollbar-width: none;
+    -ms-overflow-style: none;
+  }
+  .scrollbar-hide::-webkit-scrollbar {
+    display: none;
+  }
 }

@@ -1,12 +1,14 @@
 import { motion, useInView } from "framer-motion";
 import { useRef } from "react";
-import { Check, Crown, Zap, Shield } from "lucide-react";
+import { Check, Crown, Zap, Shield, Star } from "lucide-react";
 
 const plans = [
   {
     id: "basic",
-    name: "Basic Website",
-    price: "₹4,999",
+    name: "Basic",
+    badge: "Starter",
+    priceFrom: "₹4,999",
+    priceTo: "₹9,999",
     period: "one-time",
     desc: "Perfect for individuals & small businesses getting started online.",
     icon: Zap,
@@ -16,31 +18,63 @@ const plans = [
       "Basic SEO Setup",
       "Contact Form",
       "7 Days Delivery",
+      "1 Month Support",
     ],
     popular: false,
     cta: "Get Started",
     border: "border-white/10",
     iconBg: "bg-blue-500/10 text-blue-400",
+    glowColor: "rgba(59, 130, 246, 0.15)",
   },
   {
-    id: "business",
-    name: "Business Website",
-    price: "₹9,999",
+    id: "standard",
+    name: "Standard",
+    badge: "Most Popular",
+    priceFrom: "₹10,000",
+    priceTo: "₹19,999",
     period: "one-time",
     desc: "The complete package for growing businesses serious about their online presence.",
     icon: Crown,
     features: [
       "10 Pages Website",
       "Custom Design",
-      "SEO Optimization",
+      "Full SEO Optimization",
       "Admin Panel",
       "Social Media Integration",
+      "WhatsApp Integration",
       "14 Days Delivery",
+      "3 Months Support",
     ],
     popular: true,
     cta: "Get Started",
     border: "border-primary-blue/40",
     iconBg: "bg-teal-accent/10 text-teal-accent",
+    glowColor: "rgba(31, 111, 235, 0.20)",
+  },
+  {
+    id: "premium",
+    name: "Premium",
+    badge: "Enterprise",
+    priceFrom: "₹20,000",
+    priceTo: "Custom",
+    period: "one-time",
+    desc: "Full-scale digital solution for established businesses ready to dominate online.",
+    icon: Star,
+    features: [
+      "Unlimited Pages",
+      "Custom Full-Stack Dev",
+      "Advanced SEO Strategy",
+      "E-commerce / Booking System",
+      "CRM & API Integrations",
+      "Priority 24/7 Support",
+      "21+ Days Delivery",
+      "6 Months Ongoing Support",
+    ],
+    popular: false,
+    cta: "Get a Quote",
+    border: "border-purple-500/30",
+    iconBg: "bg-purple-500/10 text-purple-400",
+    glowColor: "rgba(124, 58, 237, 0.15)",
   },
 ];
 
@@ -51,7 +85,7 @@ const Pricing = () => {
   const scrollToContactWithPlan = (plan) => {
     const element = document.getElementById("contact");
     if (element) {
-      const planMessage = `I'm interested in the ${plan.name} plan (${plan.price}).`;
+      const planMessage = `I'm interested in the ${plan.name} plan (${plan.priceFrom}–${plan.priceTo}).`;
       window.history.replaceState(null, "", `?plan=${encodeURIComponent(planMessage)}`);
       element.scrollIntoView({ behavior: "smooth", block: "start" });
     }
@@ -70,6 +104,7 @@ const Pricing = () => {
       {/* Background orbs */}
       <div className="absolute inset-0 pointer-events-none overflow-hidden">
         <div className="absolute -bottom-32 left-1/2 -translate-x-1/2 w-[600px] h-[300px] bg-primary-blue/5 rounded-full blur-3xl" />
+        <div className="absolute top-0 right-0 w-[400px] h-[400px] bg-purple-500/3 rounded-full blur-3xl" />
       </div>
 
       <div className="max-w-7xl mx-auto px-6 lg:px-12">
@@ -85,13 +120,10 @@ const Pricing = () => {
           <h2 className="font-display text-4xl sm:text-5xl font-bold mt-3 mb-4 text-white">
             Choose Your <span className="gradient-text">Plan</span>
           </h2>
-          <p className="text-gray-400 text-lg max-w-2xl mx-auto">
-            Clear, straightforward pricing — no surprises. Select the plan that fits your business.
-          </p>
         </motion.div>
 
-        {/* Cards */}
-        <div className="grid grid-cols-1 md:grid-cols-2 gap-8 max-w-4xl mx-auto">
+        {/* Cards — 3-column grid */}
+        <div className="grid grid-cols-1 md:grid-cols-3 gap-6 lg:gap-8 max-w-6xl mx-auto">
           {plans.map((plan, i) => {
             const PlanIcon = plan.icon;
             return (
@@ -107,6 +139,11 @@ const Pricing = () => {
                     ? "bg-gradient-to-b from-primary-blue/10 to-bg-dark shadow-2xl shadow-primary-blue/15"
                     : "bg-white/[0.04] shadow-xl"
                 }`}
+                style={{
+                  boxShadow: plan.popular
+                    ? `0 25px 60px ${plan.glowColor}`
+                    : undefined,
+                }}
               >
                 {/* Popular badge */}
                 {plan.popular && (
@@ -118,7 +155,22 @@ const Pricing = () => {
                   </div>
                 )}
 
-                <div className="p-8 pt-10">
+                <div className="p-7 pt-10">
+                  {/* Plan badge */}
+                  <span
+                    className="inline-block text-xs font-bold tracking-widest uppercase mb-4 px-3 py-1 rounded-full"
+                    style={{
+                      background: plan.popular
+                        ? 'rgba(31,111,235,0.15)'
+                        : plan.id === 'premium'
+                        ? 'rgba(124,58,237,0.15)'
+                        : 'rgba(255,255,255,0.06)',
+                      color: plan.popular ? '#1F6FEB' : plan.id === 'premium' ? '#a855f7' : '#6b7280',
+                    }}
+                  >
+                    {plan.badge}
+                  </span>
+
                   {/* Plan icon & name */}
                   <div className="flex items-center gap-4 mb-6">
                     <div className={`w-12 h-12 rounded-xl flex items-center justify-center ${plan.iconBg}`}>
@@ -130,20 +182,43 @@ const Pricing = () => {
                     </div>
                   </div>
 
-                  {/* Price */}
-                  <div className="mb-8">
-                    <div className="flex items-baseline gap-2">
-                      <span className="text-5xl font-black font-display text-white">{plan.price}</span>
-                      <span className="text-gray-500 text-sm">{plan.period}</span>
+                  {/* Price range */}
+                  <div className="mb-8 pb-6 border-b border-white/[0.06]">
+                    <div className="flex items-baseline gap-1">
+                      <span className="text-3xl font-black font-display text-white">{plan.priceFrom}</span>
+                      {plan.priceTo !== 'Custom' && (
+                        <>
+                          <span className="text-gray-500 text-sm mx-1">–</span>
+                          <span className="text-2xl font-bold font-display text-gray-300">{plan.priceTo}</span>
+                        </>
+                      )}
+                      {plan.priceTo === 'Custom' && (
+                        <span className="text-gray-400 text-sm ml-1">& above</span>
+                      )}
                     </div>
+                    <span className="text-gray-500 text-xs">{plan.period}</span>
                   </div>
 
                   {/* Features */}
                   <ul className="space-y-3 mb-8">
                     {plan.features.map((feature) => (
                       <li key={feature} className="flex items-center gap-3 text-sm">
-                        <div className="w-5 h-5 rounded-full bg-teal-accent/15 flex items-center justify-center flex-shrink-0">
-                          <Check className="w-3 h-3 text-teal-accent" />
+                        <div
+                          className="w-5 h-5 rounded-full flex items-center justify-center flex-shrink-0"
+                          style={{
+                            background: plan.id === 'premium'
+                              ? 'rgba(124,58,237,0.15)'
+                              : plan.popular
+                              ? 'rgba(15,185,177,0.15)'
+                              : 'rgba(31,111,235,0.1)',
+                          }}
+                        >
+                          <Check
+                            className="w-3 h-3"
+                            style={{
+                              color: plan.id === 'premium' ? '#a855f7' : plan.popular ? '#0FB9B1' : '#1F6FEB',
+                            }}
+                          />
                         </div>
                         <span className="text-gray-300">{feature}</span>
                       </li>
@@ -158,6 +233,8 @@ const Pricing = () => {
                     className={`w-full py-3.5 rounded-xl font-semibold text-sm transition-all duration-300 ${
                       plan.popular
                         ? "bg-gradient-to-r from-primary-blue to-teal-accent text-white shadow-lg hover:shadow-xl hover:shadow-primary-blue/30"
+                        : plan.id === 'premium'
+                        ? "bg-gradient-to-r from-purple-600 to-purple-500 text-white shadow-lg hover:shadow-xl hover:shadow-purple-500/30"
                         : "bg-white/5 border border-white/10 text-white hover:bg-white/10"
                     }`}
                   >
@@ -173,11 +250,11 @@ const Pricing = () => {
         <motion.p
           initial={{ opacity: 0 }}
           animate={isInView ? { opacity: 1 } : {}}
-          transition={{ delay: 0.5 }}
+          transition={{ delay: 0.6 }}
           className="text-center text-gray-500 text-sm mt-10 flex items-center justify-center gap-2"
         >
           <Shield size={14} className="text-teal-accent" />
-          Need a custom plan? <button onClick={() => document.getElementById('contact').scrollIntoView({ behavior: 'smooth' })} className="text-primary-blue hover:text-teal-accent underline transition-colors">Contact us for a quote</button>
+          Not sure which plan fits? <button onClick={() => document.getElementById('contact').scrollIntoView({ behavior: 'smooth' })} className="text-primary-blue hover:text-teal-accent underline transition-colors">Get a free consultation</button>
         </motion.p>
       </div>
     </section>

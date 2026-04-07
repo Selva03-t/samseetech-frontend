@@ -43,9 +43,6 @@ const Team = () => {
           <h2 className="font-display text-4xl sm:text-5xl font-bold mt-3 mb-4 text-white">
             Meet Our <span className="gradient-text">Team</span>
           </h2>
-          <p className="text-gray-400 text-lg max-w-2xl mx-auto">
-            A passionate group of creators and builders dedicated to your digital success.
-          </p>
         </motion.div>
 
         {/* Grid */}

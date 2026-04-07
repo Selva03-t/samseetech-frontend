@@ -1,6 +1,6 @@
 import { useState, useRef, useEffect } from 'react'
 import { motion, AnimatePresence } from 'framer-motion'
-import { X, Send, Bot, ChevronDown } from 'lucide-react'
+import { X, Send, Bot, ChevronDown, Rocket } from 'lucide-react'
 
 // ─── Predefined Q&A ────────────────────────────────────────────────────────────
 const QA = [
@@ -8,57 +8,63 @@ const QA = [
     id: 'services',
     question: 'What services do you offer?',
     answer:
-      'We offer website development, UI/UX design, SEO, social media management, content writing, and video editing. 🚀',
+      'We offer web design & development, UI/UX design, SEO, social media, content writing, and video editing. We build digital experiences that grow your business. 🚀',
   },
   {
     id: 'pricing',
     question: 'How much does a website cost?',
     answer:
-      'Our website packages start from ₹4,999 for basic sites and ₹9,999 for business websites. Custom pricing is available! 💰',
+      'Our packages start from ₹4,999 for a basic site, ₹10,000–₹19,999 for a business site, and ₹20,000+ for premium custom builds. Free consultation to find the right fit! 💰',
   },
   {
     id: 'timeline',
-    question: 'How long will it take to build a website?',
+    question: 'How long will it take?',
     answer:
-      'Most websites are delivered within 5–14 days depending on requirements and complexity. ⏱️',
+      'Most websites are delivered within 5–14 days depending on complexity. We respect your time and always aim to deliver ahead of schedule. ⏱️',
   },
   {
-    id: 'marketing',
-    question: 'Do you provide SEO and digital marketing?',
+    id: 'seo',
+    question: 'Do you provide SEO & digital marketing?',
     answer:
-      'Yes! We provide full SEO optimization and complete digital marketing services to grow your online presence. 📈',
+      'Absolutely! We provide full on-page SEO, technical SEO, and digital marketing services to help you rank on Google and attract quality leads. 📈',
   },
   {
     id: 'contact',
     question: 'How can I contact you?',
     answer:
-      'You can reach us via email or WhatsApp. We respond quickly to all queries — usually within a few hours! 📩',
+      'You can reach us via WhatsApp at +91 90253 70797, by email at info.samseetech@gmail.com, or just fill the contact form on this page! We reply within hours. 📩',
   },
 ]
 
 // ─── Generic fallback responses ────────────────────────────────────────────────
 const FALLBACKS = [
-  "That's a great question! For detailed info, please reach out to us directly. We'd love to chat! 😊",
-  "I'm SAM, your virtual assistant. For specific queries, feel free to contact our team via WhatsApp or email.",
-  "Thanks for asking! Our team can give you a more precise answer. Contact us anytime. 🙌",
-  "I might not have the full answer, but our experts do! Drop us a message and we'll get back to you shortly.",
+  "Great question! Our team can give you a precise answer. Feel free to contact us via WhatsApp or email — we're typically lightning-fast with replies. 😊",
+  "I'm SAM, Samsee Tech's smart assistant! For specific queries, reach out to us directly via WhatsApp at +91 90253 70797.",
+  "Thanks for asking! Let me connect you with our team who can help you best. Hit the contact form or WhatsApp us. 🙌",
+  "Hmm, I'd love to give you the full picture here. Our experts can walk you through it — drop us a message anytime!",
 ]
 
 const getSmartReply = (text) => {
   const lower = text.toLowerCase()
   for (const qa of QA) {
     const keywords = qa.id === 'services'
-      ? ['service', 'offer', 'provide', 'do you']
+      ? ['service', 'offer', 'provide', 'do you', 'build', 'make', 'create']
       : qa.id === 'pricing'
-      ? ['cost', 'price', 'pricing', 'charge', 'fee', 'rupee', '₹', 'package']
+      ? ['cost', 'price', 'pricing', 'charge', 'fee', 'rupee', '₹', 'package', 'how much', 'rate']
       : qa.id === 'timeline'
-      ? ['time', 'long', 'days', 'week', 'deliver', 'duration']
-      : qa.id === 'marketing'
-      ? ['seo', 'marketing', 'digital', 'social', 'promote']
-      : ['contact', 'reach', 'email', 'whatsapp', 'call', 'phone']
+      ? ['time', 'long', 'days', 'week', 'deliver', 'duration', 'fast', 'quick']
+      : qa.id === 'seo'
+      ? ['seo', 'marketing', 'digital', 'social', 'promote', 'rank', 'google']
+      : ['contact', 'reach', 'email', 'whatsapp', 'call', 'phone', 'number']
 
     if (keywords.some((k) => lower.includes(k))) return qa.answer
   }
+
+  // Greetings
+  if (['hi', 'hey', 'hello', 'hii', 'namaste'].some(g => lower.includes(g))) {
+    return "Hey there! 👋 I'm SAM, your smart assistant. Ask me anything about Samsee Tech's services, pricing, or how we can help grow your business!"
+  }
+
   return FALLBACKS[Math.floor(Math.random() * FALLBACKS.length)]
 }
 
@@ -130,13 +136,20 @@ const TypingIndicator = () => (
 const SamAssistant = () => {
   const [open, setOpen] = useState(false)
   const [messages, setMessages] = useState([
-    { id: 0, role: 'bot', text: "Hi, I'm SAM (Smart Assistant Manager) 👋 How can I help you today?" },
+    { id: 0, role: 'bot', text: "Hey there! 👋 I'm SAM — Samsee Tech's smart assistant. Ready to help you build something amazing! What can I do for you?" },
   ])
   const [input, setInput] = useState('')
   const [typing, setTyping] = useState(false)
   const [showQuestions, setShowQuestions] = useState(true)
   const bottomRef = useRef(null)
   const inputRef = useRef(null)
+
+  // Listen for CTA "Talk to SAM" event
+  useEffect(() => {
+    const handler = () => setOpen(true)
+    window.addEventListener('openSAM', handler)
+    return () => window.removeEventListener('openSAM', handler)
+  }, [])
 
   useEffect(() => {
     if (open) {
@@ -160,6 +173,12 @@ const SamAssistant = () => {
     setShowQuestions(false)
     setMessages((prev) => [...prev, { id: Date.now(), role: 'user', text: qa.question }])
     addBotReply(qa.answer)
+  }
+
+  const handleFreeConsultation = () => {
+    setOpen(false)
+    const el = document.getElementById('contact')
+    if (el) el.scrollIntoView({ behavior: 'smooth', block: 'start' })
   }
 
   const handleSend = () => {
@@ -206,8 +225,8 @@ const SamAssistant = () => {
             transition={{ duration: 2.5, repeat: Infinity }}
             style={{ background: 'rgba(31,111,235,0.35)' }}
           />
-          <span className="relative text-xl leading-none">🤖</span>
-          <span className="relative">Chat with SAM</span>
+          <span className="relative text-xl leading-none">🚀</span>
+          <span className="relative">Ask SAM</span>
         </motion.button>
       </motion.div>
 
@@ -225,7 +244,7 @@ const SamAssistant = () => {
               bottom: '5.5rem',
               right: '1.5rem',
               width: 'min(380px, calc(100vw - 2rem))',
-              height: 'min(560px, calc(100vh - 8rem))',
+              height: 'min(580px, calc(100vh - 8rem))',
               background: 'rgba(15,23,42,0.96)',
               backdropFilter: 'blur(24px)',
               WebkitBackdropFilter: 'blur(24px)',
@@ -241,11 +260,11 @@ const SamAssistant = () => {
               }}
             >
               <div className="w-10 h-10 rounded-full bg-white/20 flex items-center justify-center text-xl flex-shrink-0">
-                🤖
+                🚀
               </div>
               <div className="flex-1">
                 <p className="text-white font-bold text-sm leading-none">SAM</p>
-                <p className="text-blue-100 text-xs mt-0.5">Smart Assistant Manager</p>
+                <p className="text-blue-100 text-xs mt-0.5">Smart Assistant · Samsee Tech</p>
               </div>
               {/* Online indicator */}
               <div className="flex items-center gap-1.5 mr-2">
@@ -272,6 +291,20 @@ const SamAssistant = () => {
               ))}
               {typing && <TypingIndicator />}
               <div ref={bottomRef} />
+            </div>
+
+            {/* ── Free Consultation quick action ── */}
+            <div className="px-4 py-2 flex-shrink-0" style={{ borderTop: '1px solid rgba(255,255,255,0.06)' }}>
+              <motion.button
+                onClick={handleFreeConsultation}
+                whileHover={{ scale: 1.02 }}
+                whileTap={{ scale: 0.98 }}
+                className="w-full py-2.5 rounded-xl text-sm font-semibold text-white flex items-center justify-center gap-2 transition-all"
+                style={{ background: 'linear-gradient(135deg, rgba(31,111,235,0.25), rgba(15,185,177,0.15))', border: '1px solid rgba(31,111,235,0.3)' }}
+              >
+                <Rocket size={14} />
+                Book a Free Consultation ✨
+              </motion.button>
             </div>
 
             {/* ── Quick questions ── */}
@@ -328,7 +361,7 @@ const SamAssistant = () => {
                 value={input}
                 onChange={(e) => setInput(e.target.value)}
                 onKeyDown={handleKeyDown}
-                placeholder="Type your message..."
+                placeholder="Ask me anything..."
                 className="flex-1 bg-white/5 border border-white/10 rounded-xl px-4 py-2.5 text-sm text-white placeholder-gray-500 outline-none focus:border-blue-500/50 transition-colors"
               />
               <motion.button

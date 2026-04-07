@@ -1,14 +1,40 @@
-import { motion } from 'framer-motion'
-import { useRef } from 'react'
+import { motion, AnimatePresence } from 'framer-motion'
+import { useRef, useState, useEffect } from 'react'
 import { useLocation } from 'react-router-dom'
 import Button from './ui/Button'
 import logo from '../assets/Samsee (1).png'
-import { ArrowRight, Play } from 'lucide-react'
+import { ArrowRight, Play, CheckCircle2, ShieldCheck, Clock3 } from 'lucide-react'
+
+// ── Cycling words for headline ──────────────────────────────────────────────
+const cycleWords = ['High-Converting', 'Stunning', 'SEO-Ready', 'Fast-Loading', 'Revenue-Driving']
+
+const CyclingWord = () => {
+  const [index, setIndex] = useState(0)
+  useEffect(() => {
+    const t = setInterval(() => setIndex(i => (i + 1) % cycleWords.length), 2500)
+    return () => clearInterval(t)
+  }, [])
+  return (
+    <span className="inline-block overflow-hidden" style={{ minWidth: '11ch' }}>
+      <AnimatePresence mode="wait">
+        <motion.span
+          key={cycleWords[index]}
+          initial={{ y: 30, opacity: 0 }}
+          animate={{ y: 0, opacity: 1 }}
+          exit={{ y: -30, opacity: 0 }}
+          transition={{ duration: 0.4, ease: 'easeInOut' }}
+          className="inline-block gradient-text"
+        >
+          {cycleWords[index]}
+        </motion.span>
+      </AnimatePresence>
+    </span>
+  )
+}
 
 // Floating animated orbs
 const FloatingOrbs = () => (
   <div className="absolute inset-0 overflow-hidden pointer-events-none">
-    {/* Primary large orb - blue */}
     <motion.div
       className="absolute w-[600px] h-[600px] rounded-full"
       style={{
@@ -19,7 +45,6 @@ const FloatingOrbs = () => (
       animate={{ scale: [1, 1.1, 1], x: [0, 30, 0], y: [0, -20, 0] }}
       transition={{ duration: 12, repeat: Infinity, ease: 'easeInOut' }}
     />
-    {/* Secondary orb - teal */}
     <motion.div
       className="absolute w-[400px] h-[400px] rounded-full"
       style={{
@@ -30,11 +55,10 @@ const FloatingOrbs = () => (
       animate={{ scale: [1, 1.15, 1], x: [0, -20, 0], y: [0, 30, 0] }}
       transition={{ duration: 10, repeat: Infinity, ease: 'easeInOut', delay: 1 }}
     />
-    {/* Accent small orb */}
     <motion.div
       className="absolute w-[250px] h-[250px] rounded-full"
       style={{
-        background: 'radial-gradient(circle, rgba(31,111,235,0.1) 0%, transparent 70%)',
+        background: 'radial-gradient(circle, rgba(124,58,237,0.12) 0%, transparent 70%)',
         top: '40%',
         right: '25%',
       }}
@@ -160,7 +184,28 @@ const TechIllustration = () => {
   )
 }
 
+// ── Trust Strip ──────────────────────────────────────────────────────────────
+const trustItems = [
+  { icon: Clock3,       label: '5-Day Delivery' },
+  { icon: ShieldCheck,  label: 'MSME Certified' },
+  { icon: CheckCircle2, label: 'Free Consultation' },
+]
 
+const TrustStrip = () => (
+  <motion.div
+    initial={{ opacity: 0, y: 10 }}
+    animate={{ opacity: 1, y: 0 }}
+    transition={{ delay: 1.2, duration: 0.5 }}
+    className="flex flex-wrap gap-4 mt-6"
+  >
+    {trustItems.map(({ icon: Icon, label }) => (
+      <div key={label} className="flex items-center gap-2">
+        <Icon size={14} className="text-teal-accent flex-shrink-0" />
+        <span className="text-gray-400 text-sm font-medium">{label}</span>
+      </div>
+    ))}
+  </motion.div>
+)
 
 const Hero = ({
   title = "Samsee Tech Solution",
@@ -242,17 +287,17 @@ const Hero = ({
               {/* Main heading */}
               <motion.h1
                 variants={itemVariants}
-                className="font-display text-3xl sm:text-4xl lg:text-5xl font-black leading-[1.1] mb-6 mt-4 text-white"
+                className="font-display text-3xl sm:text-4xl lg:text-5xl xl:text-6xl font-black leading-[1.1] mb-6 mt-4 text-white"
               >
                 {isHome ? (
                   <>
                     We Build{' '}
-                    <span className="gradient-text">Digital</span>
+                    <CyclingWord />
                     <br />
-                    Experiences
+                    <span className="text-white">Websites That</span>
                     <br />
-                    <span className="text-2xl sm:text-3xl lg:text-4xl font-light text-gray-400">
-                      That Matter
+                    <span className="text-2xl sm:text-3xl lg:text-4xl font-semibold text-gray-300">
+                      Grow Your Business 🚀
                     </span>
                   </>
                 ) : (
@@ -260,16 +305,18 @@ const Hero = ({
                 )}
               </motion.h1>
 
-              {/* Tagline */}
+              {/* Subheading / Tagline */}
               <motion.p
                 variants={itemVariants}
-                className="text-lg sm:text-xl font-semibold text-teal-accent tracking-widest mb-5"
+                className="text-base sm:text-lg text-gray-400 leading-relaxed max-w-xl mb-8"
               >
-                {tagline}
+                {isHome
+                  ? 'From UI/UX design to full-stack development and SEO, we turn your ideas into powerful digital experiences.'
+                  : tagline}
               </motion.p>
 
-              {/* Description */}
-              {description && (
+              {/* Description (non-home pages) */}
+              {!isHome && description && (
                 <motion.p
                   variants={itemVariants}
                   className="text-base sm:text-lg text-gray-400 leading-relaxed max-w-xl mb-10"
@@ -286,9 +333,9 @@ const Hero = ({
                 >
                   <Button
                     onClick={() => scrollToSection('contact')}
-                    className="text-base !px-8 !py-4 !rounded-xl"
+                    className="text-base !px-8 !py-4 !rounded-xl shadow-2xl shadow-primary-blue/30"
                   >
-                    Get a Quote
+                    Get Free Consultation
                     <ArrowRight size={16} />
                   </Button>
 
@@ -298,11 +345,13 @@ const Hero = ({
                     className="text-base !px-8 !py-4 !rounded-xl"
                   >
                     <Play size={16} className="fill-current" />
-                    View Portfolio
+                    View Our Work
                   </Button>
                 </motion.div>
               )}
 
+              {/* Trust strip (home only) */}
+              {isHome && buttons && <TrustStrip />}
 
             </motion.div>
 
@@ -320,8 +369,6 @@ const Hero = ({
           </div>
         </div>
       </div>
-
-
     </section>
   )
 }

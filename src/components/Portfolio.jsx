@@ -1,6 +1,6 @@
 import { motion, useInView } from 'framer-motion'
 import { useRef, useState, useCallback } from 'react'
-import { ExternalLink, ChevronLeft, ChevronRight } from 'lucide-react'
+import { ExternalLink, ChevronLeft, ChevronRight, ArrowRight } from 'lucide-react'
 import iot from '../assets/Iot.png'
 import OIP from '../assets/OIP.jpg'
 
@@ -16,6 +16,7 @@ const projects = [
     image: iot,
     demoUrl: 'https://aruniotdevices.netlify.app/',
     category: 'Web Development',
+    result: 'Live & Selling',
   },
   {
     title: 'Timesheet & AC Ordering App Design',
@@ -24,6 +25,7 @@ const projects = [
     image: 'https://other-levels.com/cdn/shop/products/School-Management-Dashboard-Excel-Solution-for-Education-Analytics-Other-Levels-17235124.png?v=1759938477&width=1440',
     demoUrl: 'https://www.behance.net/gallery/228488773/Timesheet-Application-Design',
     category: 'App Design',
+    result: 'Client Approved',
   },
   {
     title: 'Developer Portfolio Website',
@@ -32,14 +34,16 @@ const projects = [
     image: 'https://i.ytimg.com/vi/UQVB8fe_b4E/maxresdefault.jpg',
     demoUrl: 'https://arunarumugam.site/',
     category: 'Web Development',
+    result: '100% Responsive',
   },
   {
-    title: 'Game Accessories ordering website',
+    title: 'Game Accessories Ordering Website',
     desc: 'Modern e-commerce platform for game accessories with seamless ordering experience.',
     tags: ['React', 'E-commerce', 'UI/UX'],
     image: OIP,
     demoUrl: 'https://e-commerce-gamming-accessories.vercel.app/',
     category: 'Web Development',
+    result: 'Deployed Live',
   },
 ]
 
@@ -47,13 +51,20 @@ const projects = [
 const ALL = 'All'
 const getCategories = (list) => [ALL, ...new Set(list.map((p) => p.category))]
 
+// Category accent colors
+const catColors = {
+  'Web Development': '#1F6FEB',
+  'App Design': '#7C3AED',
+  'SEO': '#0FB9B1',
+  'All': '#1F6FEB',
+}
+
 // ─── Single project card ──────────────────────────────────────────────────────
 const ProjectCard = ({ project }) => (
   <motion.div
     whileHover={{ y: -6, scale: 1.02 }}
     transition={{ type: 'spring', stiffness: 300, damping: 22 }}
-    onClick={() => window.open(project.demoUrl, '_blank')}
-    className="group cursor-pointer flex-shrink-0 w-[300px] sm:w-[340px] rounded-2xl overflow-hidden border border-white/[0.08] hover:border-blue-500/40 transition-all duration-500 shadow-xl hover:shadow-2xl hover:shadow-blue-500/10"
+    className="group flex-shrink-0 w-[300px] sm:w-[340px] rounded-2xl overflow-hidden border border-white/[0.08] hover:border-blue-500/40 transition-all duration-500 shadow-xl hover:shadow-2xl hover:shadow-blue-500/10"
     style={{ background: 'rgba(255,255,255,0.04)' }}
   >
     {/* Image */}
@@ -66,15 +77,22 @@ const ProjectCard = ({ project }) => (
       />
       {/* overlay */}
       <div className="absolute inset-0 bg-gradient-to-t from-black/90 via-black/30 to-transparent opacity-60 group-hover:opacity-90 transition-opacity duration-500" />
+
       {/* category pill */}
       <div className="absolute top-4 left-4">
-        <span className="px-3 py-1 bg-blue-600/80 backdrop-blur-sm rounded-full text-xs font-medium text-white">
+        <span
+          className="px-3 py-1 rounded-full text-xs font-semibold text-white backdrop-blur-sm"
+          style={{ background: `${catColors[project.category] || '#1F6FEB'}cc` }}
+        >
           {project.category}
         </span>
       </div>
-      {/* hover icon */}
-      <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-12 h-12 bg-white/10 backdrop-blur-sm rounded-full flex items-center justify-center border border-white/20 opacity-0 group-hover:opacity-100 transition-opacity duration-300">
-        <ExternalLink className="w-5 h-5 text-white" />
+
+      {/* Result badge */}
+      <div className="absolute top-4 right-4">
+        <span className="px-2.5 py-1 bg-green-500/80 backdrop-blur-sm rounded-full text-xs font-semibold text-white">
+          ✓ {project.result}
+        </span>
       </div>
     </div>
 
@@ -84,7 +102,9 @@ const ProjectCard = ({ project }) => (
         {project.title}
       </h3>
       <p className="text-gray-400 text-sm mb-4 leading-relaxed line-clamp-2">{project.desc}</p>
-      <div className="flex flex-wrap gap-2">
+
+      {/* Tags */}
+      <div className="flex flex-wrap gap-2 mb-5">
         {project.tags.map((tag) => (
           <span
             key={tag}
@@ -94,6 +114,22 @@ const ProjectCard = ({ project }) => (
           </span>
         ))}
       </div>
+
+      {/* View Project CTA */}
+      <motion.a
+        href={project.demoUrl}
+        target="_blank"
+        rel="noopener noreferrer"
+        onClick={(e) => e.stopPropagation()}
+        whileHover={{ scale: 1.03 }}
+        whileTap={{ scale: 0.97 }}
+        className="flex items-center justify-center gap-2 w-full py-2.5 rounded-xl text-sm font-semibold text-white transition-all duration-300 hover:shadow-lg hover:shadow-blue-500/20"
+        style={{ background: 'linear-gradient(135deg, #1F6FEB, #0FB9B1)' }}
+      >
+        <ExternalLink size={14} />
+        View Project
+        <ArrowRight size={14} />
+      </motion.a>
     </div>
   </motion.div>
 )
@@ -176,9 +212,7 @@ const Portfolio = () => {
               Portfolio
             </span>
           </h2>
-          <p className="text-gray-400 text-lg max-w-2xl mx-auto">
-            A selection of our finest work — each project crafted with precision and purpose.
-          </p>
+        
         </motion.div>
 
         {/* ── Category Filter Tabs ── */}
@@ -243,9 +277,6 @@ const Portfolio = () => {
               WebkitOverflowScrolling: 'touch',
             }}
           >
-            {/* Hide native scrollbar in webkit */}
-            <style>{`.portfolio-scroll::-webkit-scrollbar{display:none}`}</style>
-
             {filtered.map((project, i) => (
               <motion.div
                 key={project.title}
@@ -256,7 +287,6 @@ const Portfolio = () => {
                 <ProjectCard project={project} />
               </motion.div>
             ))}
-
           </div>
 
           {/* Right arrow */}
@@ -270,24 +300,26 @@ const Portfolio = () => {
         </motion.div>
 
         {/* ── Scroll hint (mobile) ── */}
-        <motion.p
-          initial={{ opacity: 0 }}
-          animate={isInView ? { opacity: 1 } : {}}
-          transition={{ duration: 0.5, delay: 0.6 }}
-          className="text-center text-gray-600 text-xs mt-4 sm:hidden"
-        >
-          ← Swipe to explore →
-        </motion.p>
+      
 
-        {/* ── Project count ── */}
-        <motion.p
-          initial={{ opacity: 0 }}
-          animate={isInView ? { opacity: 1 } : {}}
+        {/* ── See All Work CTA ── */}
+        <motion.div
+          initial={{ opacity: 0, y: 10 }}
+          animate={isInView ? { opacity: 1, y: 0 } : {}}
           transition={{ duration: 0.5, delay: 0.7 }}
-          className="text-center text-gray-600 text-xs mt-6"
+          className="text-center mt-10"
         >
-          Showing {filtered.length} of {projects.length} project{projects.length !== 1 ? 's' : ''}
-        </motion.p>
+         
+          <a
+            href="https://docs.google.com/forms/d/e/1FAIpQLSfd4SLortk8j7J3P2zh67vVXzIHqaV1ZbWoSRoRReqqNB83lQ/viewform?usp=publish-editor"
+            target="_blank"
+            rel="noopener noreferrer"
+            className="inline-flex items-center gap-2 px-6 py-3 rounded-xl border border-white/10 text-white/70 hover:text-white hover:border-primary-blue/40 hover:bg-primary-blue/5 text-sm font-medium transition-all duration-300"
+          >
+            Start a Project Like These
+            <ArrowRight size={14} />
+          </a>
+        </motion.div>
 
       </div>
     </section>
