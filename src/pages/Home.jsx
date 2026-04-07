@@ -1,4 +1,5 @@
 import Hero from '../components/Hero'
+import MSMEBadge from '../components/MSMEBadge'
 import Services from '../components/Services'
 import WhyUs from '../components/WhyUs'
 import Portfolio from '../components/Portfolio'
@@ -6,6 +7,7 @@ import Pricing from '../components/Pricing'
 import Process from '../components/Process'
 import Team from '../components/Team'
 import Testimonials from '../components/Testimonials'
+import CTA from '../components/CTA'
 import Contact from '../components/Contact'
 
 const Home = () => {
@@ -14,6 +16,7 @@ const Home = () => {
   return (
     <div>
       <Hero description={description} />
+      <MSMEBadge />
       <Services />
       <WhyUs />
       <Portfolio />
@@ -21,6 +24,7 @@ const Home = () => {
       <Process />
       <Team />
       <Testimonials />
+      <CTA />
       <Contact />
     </div>
   )

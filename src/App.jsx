@@ -1,6 +1,7 @@
 import { Routes, Route } from 'react-router-dom'
 import Navbar from './components/common/Navbar'
 import Footer from './components/common/Footer'
+import SamAssistant from './components/SamAssistant'
 import Home from './pages/Home'
 import About from './pages/About'
 import ServicesPage from './pages/ServicesPage'
@@ -12,7 +13,7 @@ import ContactPage from './pages/ContactPage'
 
 function App() {
   return (
-    <div className="bg-bg-dark min-h-screen">
+    <div className="min-h-screen">
       <Navbar />
       <Routes>
         <Route path="/" element={<Home />} />
@@ -25,6 +26,8 @@ function App() {
         <Route path="/contact" element={<ContactPage />} />
       </Routes>
       <Footer />
+      {/* Global floating AI assistant — visible on all pages */}
+      <SamAssistant />
     </div>
   )
 }

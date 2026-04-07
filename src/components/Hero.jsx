@@ -1,9 +1,166 @@
-import { motion, useScroll, useTransform } from 'framer-motion'
+import { motion } from 'framer-motion'
 import { useRef } from 'react'
 import { useLocation } from 'react-router-dom'
 import Button from './ui/Button'
-import Particles from './Particles'
 import logo from '../assets/Samsee (1).png'
+import { ArrowRight, Play } from 'lucide-react'
+
+// Floating animated orbs
+const FloatingOrbs = () => (
+  <div className="absolute inset-0 overflow-hidden pointer-events-none">
+    {/* Primary large orb - blue */}
+    <motion.div
+      className="absolute w-[600px] h-[600px] rounded-full"
+      style={{
+        background: 'radial-gradient(circle, rgba(31,111,235,0.18) 0%, transparent 70%)',
+        top: '-10%',
+        right: '-5%',
+      }}
+      animate={{ scale: [1, 1.1, 1], x: [0, 30, 0], y: [0, -20, 0] }}
+      transition={{ duration: 12, repeat: Infinity, ease: 'easeInOut' }}
+    />
+    {/* Secondary orb - teal */}
+    <motion.div
+      className="absolute w-[400px] h-[400px] rounded-full"
+      style={{
+        background: 'radial-gradient(circle, rgba(15,185,177,0.14) 0%, transparent 70%)',
+        bottom: '5%',
+        left: '-5%',
+      }}
+      animate={{ scale: [1, 1.15, 1], x: [0, -20, 0], y: [0, 30, 0] }}
+      transition={{ duration: 10, repeat: Infinity, ease: 'easeInOut', delay: 1 }}
+    />
+    {/* Accent small orb */}
+    <motion.div
+      className="absolute w-[250px] h-[250px] rounded-full"
+      style={{
+        background: 'radial-gradient(circle, rgba(31,111,235,0.1) 0%, transparent 70%)',
+        top: '40%',
+        right: '25%',
+      }}
+      animate={{ scale: [1, 1.2, 1], x: [0, 20, 0] }}
+      transition={{ duration: 8, repeat: Infinity, ease: 'easeInOut', delay: 2 }}
+    />
+  </div>
+)
+
+// Animated grid lines background
+const GridLines = () => (
+  <div className="absolute inset-0 overflow-hidden pointer-events-none opacity-[0.03]">
+    <svg className="w-full h-full" xmlns="http://www.w3.org/2000/svg">
+      <defs>
+        <pattern id="grid" width="60" height="60" patternUnits="userSpaceOnUse">
+          <path d="M 60 0 L 0 0 0 60" fill="none" stroke="#1F6FEB" strokeWidth="1" />
+        </pattern>
+      </defs>
+      <rect width="100%" height="100%" fill="url(#grid)" />
+    </svg>
+  </div>
+)
+
+// Abstract tech illustration for right side
+const TechIllustration = () => {
+  return (
+    <div className="relative w-full h-full flex items-center justify-center">
+      {/* Outer rotating ring */}
+      <motion.div
+        className="absolute w-80 h-80 md:w-[420px] md:h-[420px] rounded-full border border-primary-blue/20"
+        animate={{ rotate: 360 }}
+        transition={{ duration: 30, repeat: Infinity, ease: 'linear' }}
+      />
+      <motion.div
+        className="absolute w-64 h-64 md:w-80 md:h-80 rounded-full border border-teal-accent/15"
+        animate={{ rotate: -360 }}
+        transition={{ duration: 20, repeat: Infinity, ease: 'linear' }}
+      />
+
+      {/* Orbiting dots on rings */}
+      {[0, 90, 180, 270].map((deg, i) => (
+        <motion.div
+          key={i}
+          className="absolute w-80 h-80 md:w-[420px] md:h-[420px]"
+          animate={{ rotate: 360 }}
+          transition={{ duration: 30, repeat: Infinity, ease: 'linear' }}
+        >
+          <div
+            className="absolute w-3 h-3 rounded-full bg-primary-blue shadow-lg shadow-primary-blue/50"
+            style={{
+              top: '50%',
+              left: '50%',
+              transform: `rotate(${deg}deg) translateX(160px) translateY(-50%) translateX(-50%)`,
+            }}
+          />
+        </motion.div>
+      ))}
+
+      {/* Inner pulsing core */}
+      <motion.div
+        className="relative w-48 h-48 md:w-56 md:h-56 rounded-full flex items-center justify-center"
+        animate={{ scale: [1, 1.05, 1] }}
+        transition={{ duration: 4, repeat: Infinity, ease: 'easeInOut' }}
+      >
+        {/* Core glow rings */}
+        {[1, 0.6, 0.3].map((opacity, i) => (
+          <motion.div
+            key={i}
+            className="absolute rounded-full border border-primary-blue"
+            style={{ inset: `${i * 20}px`, opacity }}
+            animate={{ scale: [1, 1.04, 1], opacity: [opacity, opacity * 0.7, opacity] }}
+            transition={{ duration: 3, repeat: Infinity, delay: i * 0.4 }}
+          />
+        ))}
+
+        {/* Logo centered */}
+        <motion.img
+          src={logo}
+          alt="Samsee Tech"
+          className="w-32 h-32 md:w-40 md:h-40 object-contain relative z-10 drop-shadow-2xl"
+          animate={{ y: [0, -8, 0] }}
+          transition={{ duration: 5, repeat: Infinity, ease: 'easeInOut' }}
+        />
+      </motion.div>
+
+      {/* Floating Service Badges */}
+      {[
+        { label: 'Website Dev', angle: 0,   radius: 220, color: '#1F6FEB', delay: 0 },
+        { label: 'UI/UX',       angle: 72,  radius: 210, color: '#0FB9B1', delay: 0.3 },
+        { label: 'SEO',         angle: 144, radius: 225, color: '#7C3AED', delay: 0.6 },
+        { label: 'Content',     angle: 216, radius: 215, color: '#F59E0B', delay: 0.9 },
+        { label: 'Video Edit',  angle: 288, radius: 218, color: '#EC4899', delay: 1.2 },
+      ].map(({ label, angle, radius, color, delay }) => {
+        const rad = (angle * Math.PI) / 180
+        const x = Math.cos(rad) * radius
+        const y = Math.sin(rad) * radius
+        return (
+          <motion.div
+            key={label}
+            style={{ x, y }}
+            initial={{ opacity: 0, scale: 0.5 }}
+            animate={{ opacity: 1, scale: 1 }}
+            transition={{ delay: 0.8 + delay, duration: 0.5, type: 'spring' }}
+            whileHover={{ scale: 1.15 }}
+            className="absolute cursor-default select-none"
+          >
+            <motion.div
+              animate={{ y: [0, -6, 0] }}
+              transition={{ duration: 3 + delay, repeat: Infinity, ease: 'easeInOut', delay }}
+              style={{
+                background: `linear-gradient(135deg, ${color}22, ${color}44)`,
+                border: `1px solid ${color}66`,
+                backdropFilter: 'blur(8px)',
+              }}
+              className="px-3 py-1.5 rounded-full text-xs font-semibold text-white shadow-lg whitespace-nowrap"
+            >
+              <span style={{ color }} className="mr-1.5">●</span>{label}
+            </motion.div>
+          </motion.div>
+        )
+      })}
+    </div>
+  )
+}
+
+
 
 const Hero = ({
   title = "Samsee Tech Solution",
@@ -11,170 +168,161 @@ const Hero = ({
   description,
   buttons = true
 }) => {
-
   const ref = useRef(null)
-  const { scrollYProgress } = useScroll({ target: ref })
-  const y = useTransform(scrollYProgress, [0, 1], [0, -100])
   const location = useLocation()
+  const isHome = location.pathname === '/'
 
-  const scrollToSection = (sectionId) => {
-    const element = document.getElementById(sectionId)
-
-    if (element) {
-      element.scrollIntoView({
-        behavior: 'smooth',
-        block: 'start'
-      })
-    }
+  const scrollToSection = (id) => {
+    const el = document.getElementById(id)
+    if (el) el.scrollIntoView({ behavior: 'smooth', block: 'start' })
   }
 
   const containerVariants = {
     hidden: { opacity: 0 },
-    visible: {
-      opacity: 1,
-      transition: {
-        staggerChildren: 0.2,
-        delayChildren: 0.3
-      }
-    }
+    visible: { opacity: 1, transition: { staggerChildren: 0.15, delayChildren: 0.4 } }
   }
-
   const itemVariants = {
-    hidden: { y: 50, opacity: 0 },
-    visible: {
-      y: 0,
-      opacity: 1,
-      transition: {
-        type: 'spring',
-        stiffness: 100,
-        damping: 10
-      }
-    }
+    hidden: { y: 40, opacity: 0 },
+    visible: { y: 0, opacity: 1, transition: { type: 'spring', stiffness: 80, damping: 15 } }
   }
 
   return (
+    <section
+      id="home"
+      ref={ref}
+      className="relative min-h-screen flex items-center overflow-hidden mesh-bg pt-20"
+    >
+      {/* Background layers */}
+      <GridLines />
+      <FloatingOrbs />
 
-<section
-id="home"
-ref={ref}
-className="relative min-h-screen flex items-center justify-center overflow-hidden"
->
+      {/* Particles */}
+      <div className="absolute inset-0 overflow-hidden pointer-events-none">
+        {Array.from({ length: 25 }).map((_, i) => (
+          <motion.div
+            key={i}
+            className="absolute rounded-full"
+            style={{
+              width: `${Math.random() * 4 + 1}px`,
+              height: `${Math.random() * 4 + 1}px`,
+              background: i % 3 === 0 ? '#0FB9B1' : '#1F6FEB',
+              left: `${Math.random() * 100}%`,
+              top: `${Math.random() * 100}%`,
+              opacity: Math.random() * 0.5 + 0.1,
+            }}
+            animate={{ y: [0, -40, 0], x: [0, Math.random() * 20 - 10, 0], opacity: [0.2, 0.6, 0.2] }}
+            transition={{
+              duration: 5 + Math.random() * 5,
+              repeat: Infinity,
+              ease: 'easeInOut',
+              delay: Math.random() * 4,
+            }}
+          />
+        ))}
+      </div>
 
-{/* Gradient Background */}
-<motion.div
-style={{ y }}
-className="absolute inset-0 bg-gradient-to-b from-bg-dark/50 to-transparent"
-/>
+      {/* Main Content */}
+      <div className="relative z-10 w-full">
+        <div className="max-w-7xl mx-auto px-6 lg:px-12 py-20 lg:py-28">
 
-{/* Particle Background */}
-<Particles />
+          <div className={`grid ${isHome ? 'lg:grid-cols-2' : 'lg:grid-cols-1'} gap-12 lg:gap-20 items-center`}>
 
-{/* Floating Logo Watermark */}
-{/* Floating Logo Watermark */}
-<div className="absolute inset-0 flex items-center justify-center pointer-events-none">
+            {/* LEFT: Text */}
+            <motion.div
+              variants={containerVariants}
+              initial="hidden"
+              animate="visible"
+              className={isHome ? '' : 'text-center max-w-4xl mx-auto'}
+            >
+              {/* Tag pill */}
+              <motion.div variants={itemVariants}>
+                <span className="section-tag">✦ Creative Digital Agency</span>
+              </motion.div>
 
-<motion.img
-src={logo}
-alt="Samsee Tech Logo"
-className="w-[700px] md:w-[900px] lg:w-[1100px] opacity-10 object-contain"
-animate={{
-y: [0, -40, 0],
-scale: [1, 1.08, 1]
-}}
-transition={{
-duration: 10,
-repeat: Infinity,
-ease: "easeInOut"
-}}
-/>
+              {/* Main heading */}
+              <motion.h1
+                variants={itemVariants}
+                className="font-display text-3xl sm:text-4xl lg:text-5xl font-black leading-[1.1] mb-6 mt-4 text-white"
+              >
+                {isHome ? (
+                  <>
+                    We Build{' '}
+                    <span className="gradient-text">Digital</span>
+                    <br />
+                    Experiences
+                    <br />
+                    <span className="text-2xl sm:text-3xl lg:text-4xl font-light text-gray-400">
+                      That Matter
+                    </span>
+                  </>
+                ) : (
+                  title
+                )}
+              </motion.h1>
 
-</div>
+              {/* Tagline */}
+              <motion.p
+                variants={itemVariants}
+                className="text-lg sm:text-xl font-semibold text-teal-accent tracking-widest mb-5"
+              >
+                {tagline}
+              </motion.p>
 
-{/* Hero Content */}
-<div className="container mx-auto px-4 text-center relative z-10">
+              {/* Description */}
+              {description && (
+                <motion.p
+                  variants={itemVariants}
+                  className="text-base sm:text-lg text-gray-400 leading-relaxed max-w-xl mb-10"
+                >
+                  {description}
+                </motion.p>
+              )}
 
-<motion.div
-variants={containerVariants}
-initial="hidden"
-animate="visible"
-className="space-y-6"
->
+              {/* CTA Buttons */}
+              {buttons && (
+                <motion.div
+                  variants={itemVariants}
+                  className="flex flex-col sm:flex-row gap-4 flex-wrap"
+                >
+                  <Button
+                    onClick={() => scrollToSection('contact')}
+                    className="text-base !px-8 !py-4 !rounded-xl"
+                  >
+                    Get a Quote
+                    <ArrowRight size={16} />
+                  </Button>
 
-<motion.h1
-variants={itemVariants}
-className="text-4xl sm:text-6xl md:text-7xl font-bold mb-4 text-white"
->
-{title}
-</motion.h1>
+                  <Button
+                    variant="outline"
+                    onClick={() => scrollToSection('portfolio')}
+                    className="text-base !px-8 !py-4 !rounded-xl"
+                  >
+                    <Play size={16} className="fill-current" />
+                    View Portfolio
+                  </Button>
+                </motion.div>
+              )}
 
-<motion.p
-variants={itemVariants}
-className="text-xl sm:text-2xl md:text-3xl font-light mb-6 text-primary-blue"
->
-{tagline}
-</motion.p>
 
-{description && (
+            </motion.div>
 
-<motion.p
-variants={itemVariants}
-className="text-lg sm:text-xl md:text-2xl text-gray-text max-w-3xl mx-auto mb-8 px-4"
->
-{description}
-</motion.p>
+            {/* RIGHT: Illustration (home only) */}
+            {isHome && (
+              <motion.div
+                initial={{ opacity: 0, x: 60, scale: 0.9 }}
+                animate={{ opacity: 1, x: 0, scale: 1 }}
+                transition={{ duration: 0.8, delay: 0.5, ease: 'easeOut' }}
+                className="hidden lg:flex items-center justify-center h-[480px]"
+              >
+                <TechIllustration />
+              </motion.div>
+            )}
+          </div>
+        </div>
+      </div>
 
-)}
 
-{/* Home Page Buttons */}
-{buttons && location.pathname === '/' && (
-
-<motion.div
-variants={itemVariants}
-className="flex flex-col sm:flex-row gap-3 sm:gap-4 justify-center items-center w-full sm:w-auto px-4"
->
-
-<Button
-onClick={() => scrollToSection('services')}
-className="w-full sm:w-auto px-6 py-3 text-sm sm:text-base"
->
-Get Started
-</Button>
-
-<Button
-onClick={() => scrollToSection('portfolio')}
-className="w-full sm:w-auto px-6 py-3 text-sm sm:text-base bg-transparent border-2 border-primary-blue hover:bg-primary-blue"
->
-View Portfolio
-</Button>
-
-</motion.div>
-
-)}
-
-{/* Other Page Buttons */}
-{buttons && location.pathname !== '/' && (
-
-<motion.div
-variants={itemVariants}
-className="flex flex-col sm:flex-row gap-3 sm:gap-4 justify-center items-center w-full sm:w-auto px-4"
->
-
-<Button className="w-full sm:w-auto px-6 py-3 text-sm sm:text-base">
-Get Started
-</Button>
-
-<Button className="w-full sm:w-auto px-6 py-3 text-sm sm:text-base bg-transparent border-2 border-primary-blue hover:bg-primary-blue">
-View Portfolio
-</Button>
-
-</motion.div>
-
-)}
-
-</motion.div>
-</div>
-
-</section>
+    </section>
   )
 }
 
