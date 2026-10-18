@@ -32,14 +32,14 @@ const QA = [
     id: 'contact',
     question: 'How can I contact you?',
     answer:
-      'You can reach us via WhatsApp at +91 90253 70797, by email at info.samseetech@gmail.com, or just fill the contact form on this page! We reply within hours. 📩',
+      'You can reach us via WhatsApp at +91 99941 33272, by email at info.samseetech@gmail.com, or just fill the contact form on this page! We reply within hours. 📩',
   },
 ]
 
 // ─── Generic fallback responses ────────────────────────────────────────────────
 const FALLBACKS = [
   "Great question! Our team can give you a precise answer. Feel free to contact us via WhatsApp or email — we're typically lightning-fast with replies. 😊",
-  "I'm SAM, Samsee Tech's smart assistant! For specific queries, reach out to us directly via WhatsApp at +91 90253 70797.",
+  "I'm SAM, Samsee Tech's smart assistant! For specific queries, reach out to us directly via WhatsApp at +91 99941 33272.",
   "Thanks for asking! Let me connect you with our team who can help you best. Hit the contact form or WhatsApp us. 🙌",
   "Hmm, I'd love to give you the full picture here. Our experts can walk you through it — drop us a message anytime!",
 ]
@@ -225,7 +225,7 @@ const SamAssistant = () => {
             transition={{ duration: 2.5, repeat: Infinity }}
             style={{ background: 'rgba(31,111,235,0.35)' }}
           />
-          <span className="relative text-xl leading-none">🚀</span>
+          <span className="relative text-xl leading-none">🤖</span>
           <span className="relative">Ask SAM</span>
         </motion.button>
       </motion.div>
@@ -260,7 +260,7 @@ const SamAssistant = () => {
               }}
             >
               <div className="w-10 h-10 rounded-full bg-white/20 flex items-center justify-center text-xl flex-shrink-0">
-                🚀
+                🤖
               </div>
               <div className="flex-1">
                 <p className="text-white font-bold text-sm leading-none">SAM</p>

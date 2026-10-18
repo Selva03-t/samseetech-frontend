@@ -155,7 +155,7 @@ const Pricing = () => {
                   </div>
                 )}
 
-                <div className="p-7 pt-10">
+                <div className="p-7 pt-10 flex flex-col items-center text-center md:items-start md:text-left">
                   {/* Plan badge */}
                   <span
                     className="inline-block text-xs font-bold tracking-widest uppercase mb-4 px-3 py-1 rounded-full"
@@ -176,15 +176,15 @@ const Pricing = () => {
                     <div className={`w-12 h-12 rounded-xl flex items-center justify-center ${plan.iconBg}`}>
                       <PlanIcon className="w-6 h-6" />
                     </div>
-                    <div>
+                    <div className="text-left">
                       <h3 className="text-xl font-bold text-white">{plan.name}</h3>
                       <p className="text-gray-500 text-xs mt-0.5">{plan.desc}</p>
                     </div>
                   </div>
 
                   {/* Price range */}
-                  <div className="mb-8 pb-6 border-b border-white/[0.06]">
-                    <div className="flex items-baseline gap-1">
+                  <div className="mb-8 pb-6 border-b border-white/[0.06] w-full">
+                    <div className="flex items-baseline gap-1 justify-center md:justify-start">
                       <span className="text-3xl font-black font-display text-white">{plan.priceFrom}</span>
                       {plan.priceTo !== 'Custom' && (
                         <>
@@ -200,7 +200,7 @@ const Pricing = () => {
                   </div>
 
                   {/* Features */}
-                  <ul className="space-y-3 mb-8">
+                  <ul className="space-y-3 mb-8 w-full text-left">
                     {plan.features.map((feature) => (
                       <li key={feature} className="flex items-center gap-3 text-sm">
                         <div

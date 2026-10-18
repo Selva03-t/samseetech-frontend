@@ -1,5 +1,5 @@
 import { motion } from "framer-motion";
-import { Facebook, Instagram, Linkedin, Phone, Mail, ArrowUp, MapPin, Zap } from "lucide-react";
+import { Facebook, Instagram, Linkedin, Phone, Mail, ArrowUp, MapPin, Zap, ShieldCheck } from "lucide-react";
 import logo from "../../assets/Samsee.png";
 
 const Footer = () => {
@@ -27,12 +27,7 @@ const Footer = () => {
   ];
 
   const socials = [
-    {
-      icon: Facebook,
-      href: "https://facebook.com/yourpage",
-      label: "Facebook",
-      color: "hover:text-blue-400 hover:border-blue-400/40",
-    },
+    
     {
       icon: Instagram,
       href: "https://www.instagram.com/samsee.tech?igsh=MW9oODF1Znhhanc4Ng==",
@@ -41,7 +36,7 @@ const Footer = () => {
     },
     {
       icon: Linkedin,
-      href: "https://linkedin.com/company/yourpage",
+      href: "https://www.linkedin.com/company/samsee-tech/",
       label: "LinkedIn",
       color: "hover:text-blue-500 hover:border-blue-500/40",
     },
@@ -76,6 +71,12 @@ const Footer = () => {
             <p className="text-gray-500 text-sm leading-relaxed mb-5">
               We help startups, businesses, restaurants and brands build powerful digital experiences with websites, apps and marketing.
             </p>
+
+            {/* MSME Badge */}
+            <div className="flex items-center gap-2 mb-6 px-3 py-1.5 rounded-lg border border-teal-accent/30 bg-teal-accent/10 w-fit">
+              <ShieldCheck size={16} className="text-teal-accent" />
+              <span className="text-teal-accent text-xs font-semibold tracking-wide">MSME Registered Business</span>
+            </div>
 
             {/* Location */}
             <div className="flex items-start gap-2 text-gray-500 text-sm mb-6">
@@ -137,7 +138,7 @@ const Footer = () => {
 
             <div className="space-y-4">
               <a
-                href="tel:+919025370797"
+                href="tel:+919994133272"
                 className="flex items-center gap-3 group"
               >
                 <div className="w-8 h-8 rounded-lg bg-primary-blue/10 border border-primary-blue/20 flex items-center justify-center group-hover:bg-primary-blue/20 transition-colors">
@@ -145,7 +146,7 @@ const Footer = () => {
                 </div>
                 <div>
                   <p className="text-gray-500 text-xs">Phone</p>
-                  <p className="text-gray-300 text-sm group-hover:text-white transition-colors">+91 90253 70797</p>
+                  <p className="text-gray-300 text-sm group-hover:text-white transition-colors">+91 99941 33272</p>
                 </div>
               </a>
 
@@ -164,7 +165,7 @@ const Footer = () => {
 
               {/* CTA Button */}
               <a
-                href="tel:+919025370797"
+                href="tel:+919994133272"
                 className="inline-flex items-center gap-2 bg-gradient-to-r from-primary-blue to-teal-accent text-white text-sm font-semibold px-5 py-2.5 rounded-xl shadow-lg hover:shadow-primary-blue/30 hover:scale-105 transition-all duration-300 mt-2"
               >
                 <Zap size={14} />

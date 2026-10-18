@@ -6,7 +6,7 @@ import { Mail, Phone, MapPin, Send, MessageSquare, Copy, Check } from 'lucide-re
 // ── Floating WhatsApp Button ─────────────────────────────────────────────────
 const WhatsAppFloat = () => {
   const waMessage = encodeURIComponent("Hi! I'm interested in your services. Can we connect?")
-  const waUrl = `https://wa.me/919025370797?text=${waMessage}`
+  const waUrl = `https://wa.me/919994133272?text=${waMessage}`
 
   return (
     <motion.a
@@ -112,7 +112,7 @@ const Contact = () => {
   }
 
   const contactInfo = [
-    { icon: Phone, label: 'Phone', value: '+91 90253 70797', href: 'tel:+919025370797', copyValue: '+919025370797' },
+    { icon: Phone, label: 'Phone', value: '+91 99941 33272', href: 'tel:+919994133272', copyValue: '+919994133272' },
     { icon: Mail, label: 'Email', value: 'info.samseetech@gmail.com', href: 'mailto:info.samseetech@gmail.com', copyValue: 'info.samseetech@gmail.com' },
     { icon: MapPin, label: 'Location', value: 'Chennai, Tamil Nadu, India', href: null, copyValue: null },
   ]
@@ -161,7 +161,7 @@ const Contact = () => {
             >
               <form onSubmit={handleSubmit} className="bg-white/[0.03] backdrop-blur-sm border border-white/[0.08] rounded-2xl p-8 shadow-xl space-y-5">
 
-                <div className="flex items-center gap-3 mb-2">
+                <div className="flex items-center justify-center gap-3 mb-2">
                   <div className="w-8 h-8 rounded-lg bg-primary-blue/10 flex items-center justify-center">
                     <MessageSquare className="w-4 h-4 text-primary-blue" />
                   </div>

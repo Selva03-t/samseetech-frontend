@@ -1,5 +1,5 @@
 import { motion, useInView } from 'framer-motion'
-import { useRef, useState, useCallback } from 'react'
+import { useRef, useState, useCallback, useEffect } from 'react'
 import { ExternalLink, ChevronLeft, ChevronRight, ArrowRight } from 'lucide-react'
 import iot from '../assets/Iot.png'
 import OIP from '../assets/OIP.jpg'
@@ -31,7 +31,7 @@ const projects = [
     title: 'Developer Portfolio Website',
     desc: 'Stunning personal portfolio showcasing developer skills and projects.',
     tags: ['React', 'Portfolio', 'Animation'],
-    image: 'https://i.ytimg.com/vi/UQVB8fe_b4E/maxresdefault.jpg',
+    image: 'https://images.unsplash.com/photo-1498050108023-c5249f4df085?q=80&w=600&auto=format&fit=crop',
     demoUrl: 'https://arunarumugam.site/',
     category: 'Web Development',
     result: '100% Responsive',
@@ -178,6 +178,21 @@ const Portfolio = () => {
       scrollRef.current.style.userSelect = ''
     }
   }
+
+  // ── Auto-scroll ───────────────────────────────────────────────────────────
+  useEffect(() => {
+    const interval = setInterval(() => {
+      if (!isDragging.current && scrollRef.current) {
+         const { scrollLeft, scrollWidth, clientWidth } = scrollRef.current;
+         if (scrollLeft >= scrollWidth - clientWidth - 20) {
+            scrollRef.current.scrollTo({ left: 0, behavior: 'smooth' });
+         } else {
+            scrollRef.current.scrollBy({ left: 340, behavior: 'smooth' });
+         }
+      }
+    }, 4000);
+    return () => clearInterval(interval);
+  }, [filtered]);
 
   return (
     <section

@@ -15,7 +15,7 @@ const CyclingWord = () => {
     return () => clearInterval(t)
   }, [])
   return (
-    <span className="inline-block overflow-hidden" style={{ minWidth: '11ch' }}>
+    <span className="inline-flex justify-center lg:justify-start overflow-hidden w-[15ch] lg:w-auto" style={{ verticalAlign: 'bottom' }}>
       <AnimatePresence mode="wait">
         <motion.span
           key={cycleWords[index]}
@@ -196,7 +196,7 @@ const TrustStrip = () => (
     initial={{ opacity: 0, y: 10 }}
     animate={{ opacity: 1, y: 0 }}
     transition={{ delay: 1.2, duration: 0.5 }}
-    className="flex flex-wrap gap-4 mt-6"
+    className="flex flex-wrap gap-4 mt-6 justify-center lg:justify-start"
   >
     {trustItems.map(({ icon: Icon, label }) => (
       <div key={label} className="flex items-center gap-2">
@@ -277,10 +277,10 @@ const Hero = ({
               variants={containerVariants}
               initial="hidden"
               animate="visible"
-              className={isHome ? '' : 'text-center max-w-4xl mx-auto'}
+              className={isHome ? 'text-center lg:text-left' : 'text-center max-w-4xl mx-auto'}
             >
               {/* Tag pill */}
-              <motion.div variants={itemVariants}>
+              <motion.div variants={itemVariants} className="flex justify-center lg:justify-start">
                 <span className="section-tag">✦ Creative Digital Agency</span>
               </motion.div>
 
@@ -308,7 +308,7 @@ const Hero = ({
               {/* Subheading / Tagline */}
               <motion.p
                 variants={itemVariants}
-                className="text-base sm:text-lg text-gray-400 leading-relaxed max-w-xl mb-8"
+                className="text-base sm:text-lg text-gray-400 leading-relaxed max-w-xl mb-8 mx-auto lg:mx-0"
               >
                 {isHome
                   ? 'From UI/UX design to full-stack development and SEO, we turn your ideas into powerful digital experiences.'
@@ -319,7 +319,7 @@ const Hero = ({
               {!isHome && description && (
                 <motion.p
                   variants={itemVariants}
-                  className="text-base sm:text-lg text-gray-400 leading-relaxed max-w-xl mb-10"
+                  className="text-base sm:text-lg text-gray-400 leading-relaxed max-w-xl mb-10 mx-auto"
                 >
                   {description}
                 </motion.p>
@@ -329,7 +329,7 @@ const Hero = ({
               {buttons && (
                 <motion.div
                   variants={itemVariants}
-                  className="flex flex-col sm:flex-row gap-4 flex-wrap"
+                  className="flex flex-col sm:flex-row gap-4 flex-wrap justify-center lg:justify-start"
                 >
                   <Button
                     onClick={() => scrollToSection('contact')}

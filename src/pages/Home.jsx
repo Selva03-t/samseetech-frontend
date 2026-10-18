@@ -1,5 +1,4 @@
 import Hero from '../components/Hero'
-import MSMEBadge from '../components/MSMEBadge'
 import Services from '../components/Services'
 import WhyUs from '../components/WhyUs'
 import Portfolio from '../components/Portfolio'
@@ -16,7 +15,6 @@ const Home = () => {
   return (
     <div>
       <Hero description={description} />
-      <MSMEBadge />
       <Services />
       <WhyUs />
       <Portfolio />

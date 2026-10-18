@@ -70,19 +70,16 @@ const Navbar = () => {
             className="flex items-center gap-3 cursor-pointer flex-shrink-0"
             onClick={() => scrollToSection("home")}
           >
-            <div className="relative">
-              <div className="w-10 h-10 rounded-xl overflow-hidden border border-primary-blue/40 shadow-lg shadow-primary-blue/20">
-                <img
-                  src={logo}
-                  alt="Samsee Tech Logo"
-                  className="w-full h-full object-cover"
-                />
-              </div>
-              <span className="absolute -bottom-0.5 -right-0.5 w-3 h-3 bg-teal-accent rounded-full border-2 border-[#0B1225]" />
+            <div className="w-12 h-12 sm:w-14 sm:h-14 rounded-xl overflow-hidden border border-primary-blue/30 shadow-lg shadow-primary-blue/20">
+              <img
+                src={logo}
+                alt="Samsee Tech Logo"
+                className="w-full h-full object-cover"
+              />
             </div>
-            <div className="flex flex-col">
-              <span className="text-base font-bold text-white font-display leading-tight">Samsee Tech</span>
-              <span className="text-[10px] text-teal-accent font-medium leading-tight tracking-wider">SOLUTION</span>
+            <div className="flex flex-col justify-center gap-0.5">
+              <span className="text-lg sm:text-xl font-bold text-white font-display leading-none">Samsee Tech</span>
+              <span className="text-[9px] sm:text-[10px] text-teal-accent font-semibold leading-none tracking-widest pl-0.5">SOLUTION</span>
             </div>
           </motion.div>
 

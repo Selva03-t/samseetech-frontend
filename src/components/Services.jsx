@@ -156,7 +156,7 @@ const Services = () => {
                   {/* Card inner glow */}
                   <div className={`absolute inset-0 bg-gradient-to-br ${service.color} opacity-0 group-hover:opacity-100 transition-opacity duration-500 rounded-2xl`} />
 
-                  <div className="relative z-10">
+                  <div className="relative z-10 flex flex-col items-center text-center">
                     {/* Icon */}
                     <div className={`inline-flex items-center justify-center w-14 h-14 rounded-xl ${service.iconBg} mb-5 transition-all duration-300 group-hover:scale-110`}>
                       <Icon className="w-7 h-7" />

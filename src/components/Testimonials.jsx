@@ -102,18 +102,45 @@ const TestimonialCard = ({ testimonial, index, isInView }) => (
 const Testimonials = () => {
   const ref = useRef(null);
   const isInView = useInView(ref, { once: true, amount: 0.1 });
-  const [mobileIndex, setMobileIndex] = useState(0);
-  const [paused, setPaused] = useState(false);
+  const scrollRef = useRef(null);
+  const isDragging = useRef(false);
+  const startX = useRef(0);
+  const scrollStart = useRef(0);
 
-  // Mobile auto-cycle
+  // Auto-cycle
   useEffect(() => {
-    if (!paused && isInView) {
-      const interval = setInterval(() => {
-        setMobileIndex((prev) => (prev + 1) % testimonials.length);
-      }, 4000);
-      return () => clearInterval(interval);
+    const interval = setInterval(() => {
+      if (!isDragging.current && scrollRef.current) {
+         const { scrollLeft, scrollWidth, clientWidth } = scrollRef.current;
+         if (scrollLeft >= scrollWidth - clientWidth - 20) {
+            scrollRef.current.scrollTo({ left: 0, behavior: 'smooth' });
+         } else {
+            scrollRef.current.scrollBy({ left: clientWidth, behavior: 'smooth' });
+         }
+      }
+    }, 4000);
+    return () => clearInterval(interval);
+  }, []);
+
+  const onMouseDown = (e) => {
+    isDragging.current = true;
+    startX.current = e.pageX;
+    scrollStart.current = scrollRef.current.scrollLeft;
+    scrollRef.current.style.cursor = 'grabbing';
+    scrollRef.current.style.userSelect = 'none';
+  };
+  const onMouseMove = (e) => {
+    if (!isDragging.current) return;
+    const dx = e.pageX - startX.current;
+    scrollRef.current.scrollLeft = scrollStart.current - dx;
+  };
+  const onMouseUp = () => {
+    isDragging.current = false;
+    if (scrollRef.current) {
+      scrollRef.current.style.cursor = 'grab';
+      scrollRef.current.style.userSelect = '';
     }
-  }, [paused, isInView]);
+  };
 
   return (
     <section id="testimonials" ref={ref} className="relative py-24 bg-gradient-to-b from-bg-dark to-[#0B1225] overflow-hidden">
@@ -143,34 +170,21 @@ const Testimonials = () => {
           ))}
         </div>
 
-        {/* ── Mobile: single card carousel ── */}
+        {/* ── Mobile: drag & swipe scroll ── */}
         <div
-          className="md:hidden"
-          onMouseEnter={() => setPaused(true)}
-          onMouseLeave={() => setPaused(false)}
+          ref={scrollRef}
+          onMouseDown={onMouseDown}
+          onMouseMove={onMouseMove}
+          onMouseUp={onMouseUp}
+          onMouseLeave={onMouseUp}
+          className="md:hidden flex gap-4 overflow-x-auto pb-4 scroll-smooth snap-x snap-mandatory scrollbar-hide"
+          style={{ cursor: 'grab', WebkitOverflowScrolling: 'touch' }}
         >
-          <motion.div
-            key={mobileIndex}
-            initial={{ opacity: 0, x: 40, scale: 0.97 }}
-            animate={{ opacity: 1, x: 0, scale: 1 }}
-            exit={{ opacity: 0, x: -40, scale: 0.97 }}
-            transition={{ type: "spring", stiffness: 200, damping: 25 }}
-          >
-            <TestimonialCard testimonial={testimonials[mobileIndex]} index={0} isInView={isInView} />
-          </motion.div>
-
-          {/* Mobile dots */}
-          <div className="flex justify-center gap-2 mt-6">
-            {testimonials.map((_, i) => (
-              <button
-                key={i}
-                onClick={() => setMobileIndex(i)}
-                className={`h-2 rounded-full transition-all duration-300 ${
-                  i === mobileIndex ? "w-8 bg-primary-blue" : "w-2 bg-white/20 hover:bg-white/40"
-                }`}
-              />
-            ))}
-          </div>
+          {testimonials.map((t, i) => (
+            <div key={t.author} className="w-[85vw] flex-shrink-0 snap-center pointer-events-none sm:pointer-events-auto">
+              <TestimonialCard testimonial={t} index={i} isInView={isInView} />
+            </div>
+          ))}
         </div>
 
         {/* Overall rating badge */}

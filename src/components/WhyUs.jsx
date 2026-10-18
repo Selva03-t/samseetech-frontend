@@ -9,9 +9,9 @@ const whyUs = [
     icon: Lightbulb,
     title: 'Client-Focused Approach',
     desc: 'Your vision drives every decision. We listen first, then build — delivering solutions tailored exactly to your goals.',
-    color: 'text-yellow-400',
-    bg: 'bg-yellow-400/10 border-yellow-400/20',
-    glow: 'hover:shadow-yellow-400/10',
+    color: 'text-cyan-400',
+    bg: 'bg-cyan-400/10 border-cyan-400/20',
+    glow: 'hover:shadow-cyan-400/10',
     
   },
   {
@@ -130,15 +130,10 @@ const WhyUs = () => {
                   {item.num}
                 </span>
 
-                <div className="relative z-10">
-                  {/* Step badge + icon */}
-                  <div className="flex items-center gap-3 mb-5">
-                    <div className={`inline-flex items-center justify-center w-14 h-14 rounded-xl border ${item.bg} transition-transform duration-300 group-hover:scale-110`}>
-                      <Icon className={`w-7 h-7 ${item.color}`} />
-                    </div>
-                    <span className={`text-xs font-bold tracking-widest uppercase ${item.color} opacity-60`}>
-                      {item.num}
-                    </span>
+                <div className="relative z-10 flex flex-col items-center text-center">
+                  {/* Icon */}
+                  <div className={`inline-flex items-center justify-center w-14 h-14 rounded-xl border ${item.bg} transition-transform duration-300 group-hover:scale-110 mb-4`}>
+                    <Icon className={`w-7 h-7 ${item.color}`} />
                   </div>
 
                   <h3 className="font-bold text-white text-base mb-2">{item.title}</h3>

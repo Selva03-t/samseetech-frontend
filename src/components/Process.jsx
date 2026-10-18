@@ -77,17 +77,17 @@ const Process = () => {
                 initial={{ opacity: 0, x: i % 2 === 0 ? -40 : 40 }}
                 animate={isInView ? { opacity: 1, x: 0 } : {}}
                 transition={{ delay: i * 0.15, type: 'spring', stiffness: 80 }}
-                className={`relative flex items-start gap-6 md:gap-0 ${
+                className={`relative flex flex-col items-center text-center md:items-start md:text-left md:flex-row md:gap-0 ${
                   i % 2 === 0 ? 'md:flex-row' : 'md:flex-row-reverse'
                 }`}
               >
-                {/* Step number circle — hidden on mobile, centered on desktop */}
-                <div className="hidden md:flex absolute left-1/2 -translate-x-1/2 z-10 w-14 h-14 rounded-full bg-bg-dark border-2 border-primary-blue/30 items-center justify-center shadow-lg shadow-primary-blue/10">
+                {/* Mobile number circle */}
+                <div className={`md:hidden flex-shrink-0 w-12 h-12 rounded-full flex items-center justify-center border mb-4 ${step.bg}`}>
                   <span className={`font-display font-black text-sm ${step.color}`}>{step.number}</span>
                 </div>
 
-                {/* Mobile number */}
-                <div className={`sm:hidden flex-shrink-0 w-12 h-12 rounded-full flex items-center justify-center border ${step.bg}`}>
+                {/* Step number circle — centered on desktop timeline */}
+                <div className="hidden md:flex absolute left-1/2 -translate-x-1/2 z-10 w-14 h-14 rounded-full bg-bg-dark border-2 border-primary-blue/30 items-center justify-center shadow-lg shadow-primary-blue/10">
                   <span className={`font-display font-black text-sm ${step.color}`}>{step.number}</span>
                 </div>
 
@@ -98,7 +98,7 @@ const Process = () => {
                     transition={{ type: 'spring', stiffness: 300 }}
                     className={`bg-white/[0.04] backdrop-blur-sm border ${step.bg} rounded-2xl p-6 shadow-xl`}
                   >
-                    <div className="flex items-center gap-3 mb-3">
+                    <div className="flex items-center justify-center md:justify-start gap-3 mb-3">
                       <CheckCircle2 className={`w-5 h-5 flex-shrink-0 ${step.color}`} />
                       <h3 className="font-bold text-white text-lg">{step.title}</h3>
                     </div>
