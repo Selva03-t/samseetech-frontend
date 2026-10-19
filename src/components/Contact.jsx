@@ -6,7 +6,7 @@ import { Mail, Phone, MapPin, Send, MessageSquare, Copy, Check } from 'lucide-re
 // ── Floating WhatsApp Button ─────────────────────────────────────────────────
 const WhatsAppFloat = () => {
   const waMessage = encodeURIComponent("Hi! I'm interested in your services. Can we connect?")
-  const waUrl = `https://wa.me/919994133272?text=${waMessage}`
+  const waUrl = `https://wa.me/919360832681?text=${waMessage}`
 
   return (
     <motion.a
@@ -112,7 +112,8 @@ const Contact = () => {
   }
 
   const contactInfo = [
-    { icon: Phone, label: 'Phone', value: '+91 99941 33272', href: 'tel:+919994133272', copyValue: '+919994133272' },
+    { icon: Phone, label: 'Phone', value: '+91 93608 32681', href: 'tel:+919360832681', copyValue: '+919360832681' },
+    { icon: Phone, label: 'Phone (Alt)', value: '+91 99941 33272', href: 'tel:+919994133272', copyValue: '+919994133272' },
     { icon: Mail, label: 'Email', value: 'info.samseetech@gmail.com', href: 'mailto:info.samseetech@gmail.com', copyValue: 'info.samseetech@gmail.com' },
     { icon: MapPin, label: 'Location', value: 'Chennai, Tamil Nadu, India', href: null, copyValue: null },
   ]

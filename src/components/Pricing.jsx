@@ -7,8 +7,6 @@ const plans = [
     id: "basic",
     name: "Basic",
     badge: "Starter",
-    priceFrom: "₹4,999",
-    priceTo: "₹9,999",
     period: "one-time",
     desc: "Perfect for individuals & small businesses getting started online.",
     icon: Zap,
@@ -30,8 +28,6 @@ const plans = [
     id: "standard",
     name: "Standard",
     badge: "Most Popular",
-    priceFrom: "₹10,000",
-    priceTo: "₹19,999",
     period: "one-time",
     desc: "The complete package for growing businesses serious about their online presence.",
     icon: Crown,
@@ -55,8 +51,6 @@ const plans = [
     id: "premium",
     name: "Premium",
     badge: "Enterprise",
-    priceFrom: "₹20,000",
-    priceTo: "Custom",
     period: "one-time",
     desc: "Full-scale digital solution for established businesses ready to dominate online.",
     icon: Star,
@@ -85,7 +79,7 @@ const Pricing = () => {
   const scrollToContactWithPlan = (plan) => {
     const element = document.getElementById("contact");
     if (element) {
-      const planMessage = `I'm interested in the ${plan.name} plan (${plan.priceFrom}–${plan.priceTo}).`;
+      const planMessage = `I'm interested in the ${plan.name} plan.`;
       window.history.replaceState(null, "", `?plan=${encodeURIComponent(planMessage)}`);
       element.scrollIntoView({ behavior: "smooth", block: "start" });
     }
@@ -182,19 +176,17 @@ const Pricing = () => {
                     </div>
                   </div>
 
-                  {/* Price range */}
+                  {/* Contact for pricing */}
                   <div className="mb-8 pb-6 border-b border-white/[0.06] w-full">
-                    <div className="flex items-baseline gap-1 justify-center md:justify-start">
-                      <span className="text-3xl font-black font-display text-white">{plan.priceFrom}</span>
-                      {plan.priceTo !== 'Custom' && (
-                        <>
-                          <span className="text-gray-500 text-sm mx-1">–</span>
-                          <span className="text-2xl font-bold font-display text-gray-300">{plan.priceTo}</span>
-                        </>
-                      )}
-                      {plan.priceTo === 'Custom' && (
-                        <span className="text-gray-400 text-sm ml-1">& above</span>
-                      )}
+                    <div className="flex items-center gap-2 justify-center md:justify-start">
+                      <span
+                        className="text-lg font-bold"
+                        style={{
+                          color: plan.id === 'premium' ? '#a855f7' : plan.popular ? '#0FB9B1' : '#1F6FEB',
+                        }}
+                      >
+                        Contact for Pricing
+                      </span>
                     </div>
                     <span className="text-gray-500 text-xs">{plan.period}</span>
                   </div>
