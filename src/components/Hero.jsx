@@ -147,10 +147,11 @@ const TechIllustration = () => {
       {/* Floating Service Badges */}
       {[
         { label: 'Website Dev', angle: 0,   radius: 220, color: '#1F6FEB', delay: 0 },
-        { label: 'UI/UX',       angle: 72,  radius: 210, color: '#0FB9B1', delay: 0.3 },
-        { label: 'SEO',         angle: 144, radius: 225, color: '#7C3AED', delay: 0.6 },
-        { label: 'Content',     angle: 216, radius: 215, color: '#F59E0B', delay: 0.9 },
-        { label: 'Video Edit',  angle: 288, radius: 218, color: '#EC4899', delay: 1.2 },
+        { label: 'UI/UX',       angle: 60,  radius: 210, color: '#0FB9B1', delay: 0.3 },
+        { label: 'Mobile App',  angle: 120, radius: 225, color: '#EC4899', delay: 0.5 },
+        { label: 'SEO',         angle: 180, radius: 220, color: '#7C3AED', delay: 0.6 },
+        { label: 'Content',     angle: 240, radius: 215, color: '#F59E0B', delay: 0.9 },
+        { label: 'Video Edit',  angle: 300, radius: 218, color: '#22C55E', delay: 1.2 },
       ].map(({ label, angle, radius, color, delay }) => {
         const rad = (angle * Math.PI) / 180
         const x = Math.cos(rad) * radius

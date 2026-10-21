@@ -1,6 +1,6 @@
 import { motion, useInView, AnimatePresence } from "framer-motion";
 import { useRef, useState } from "react";
-import { Webhook, Smartphone, Search, Share2, FileText, Video, X, ExternalLink, ArrowRight, CheckCircle2 } from "lucide-react";
+import { Webhook, Smartphone, Search, Share2, FileText, Video, TabletSmartphone, X, ExternalLink, ArrowRight, CheckCircle2 } from "lucide-react";
 
 const services = [
   {
@@ -32,6 +32,21 @@ const services = [
     glow: "group-hover:shadow-teal-500/20",
     iconBg: "bg-teal-500/15 text-teal-400",
     accentColor: "#0FB9B1",
+  },
+  {
+    icon: TabletSmartphone,
+    title: "Mobile App Development",
+    desc: "Native & cross-platform apps that users love and businesses rely on.",
+    details: "We build high-performance iOS and Android apps using React Native and Flutter. From concept to App Store launch, we deliver polished, scalable mobile experiences tailored to your business goals.",
+    benefits: [
+      "Cross-platform iOS & Android with a single codebase",
+      "Smooth animations & native-feel UI/UX",
+      "API integrations, push notifications & offline support",
+    ],
+    color: "from-pink-500/20 to-pink-600/5",
+    glow: "group-hover:shadow-pink-500/20",
+    iconBg: "bg-pink-500/15 text-pink-400",
+    accentColor: "#EC4899",
   },
   {
     icon: Search,

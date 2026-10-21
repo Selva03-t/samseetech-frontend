@@ -8,7 +8,7 @@ const QA = [
     id: 'services',
     question: 'What services do you offer?',
     answer:
-      'We offer web design & development, UI/UX design, SEO, social media, content writing, and video editing. We build digital experiences that grow your business. 🚀',
+      'We offer web design & development, mobile app development, UI/UX design, SEO, social media, content writing, and video editing. We build digital experiences that grow your business. 🚀',
   },
   {
     id: 'pricing',

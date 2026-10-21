@@ -19,7 +19,8 @@ const Footer = () => {
 
   const services = [
     "Website Design & Development",
-    "Mobile App UI/UX Design",
+    "Mobile App Development",
+    "UI/UX Design",
     "SEO & Digital Marketing",
     "Social Media Management",
     "Content Writing",
